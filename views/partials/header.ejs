@@ -19,18 +19,18 @@
                     <li><a href="/?esporte=Corrida">Corrida</a></li>
                     <li><a href="/?esporte=Basquete">Basquete</a></li>
                     <li><a href="/?esporte=Casual">Casual</a></li>
-                    
-                    <% if (locals.user) { %>
-                        <% if (locals.isAdmin) { %>
-                            <li class="admin-link"><a href="/admin"><i class="fas fa-user-shield"></i> Admin</a></li>
-                        <% } %>
-                        <li class="user-info">Olá, <strong><%= user.nome %></strong></li>
-                        <li><a href="/auth/logout" class="logout-link"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                    <% } else { %>
+
+                    <% if (!isLoggedIn) { %>
                         <li><a href="/auth/login" class="login-btn">Entrar</a></li>
                         <li><a href="/auth/registro" class="register-btn">Cadastrar</a></li>
+                    <% } else { %>
+                        <% if (isAdmin) { %>
+                            <li><a href="/admin" class="admin-btn">Admin</a></li>
+                        <% } %>
+                        <li><a href="/auth/logout" class="logout-btn">Sair</a></li>
                     <% } %>
                 </ul>
+
                 <div class="menu-toggle">
                     <i class="fas fa-bars"></i>
                 </div>

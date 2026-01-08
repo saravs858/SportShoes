@@ -512,3 +512,34 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Botões de Ações Rápidas */
+.quick-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.quick-actions a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--success-color);
+    color: var(--white);
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.quick-actions a:hover {
+    background: #21867a; /* tom mais escuro do verde */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.quick-actions a i {
+    font-size: 1.1rem;
+}

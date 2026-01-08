@@ -1,79 +1,82 @@
 const express = require('express');
 const router = express.Router();
 const isAdmin = require('../middlewares/isAdmin');
+const Tenis = require('../models/Tenis');
 
-// Todas as rotas aqui usam o middleware isAdmin
+// Todas as rotas usam o middleware isAdmin
 router.use(isAdmin);
 
 // Dashboard Admin
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const totalProdutos = await Tenis.countDocuments();
+
     res.render('admin/dashboard', { 
-        totalProdutos: global.tenisData.length,
+        totalProdutos,
         adminQuery: '?admin=true'
     });
 });
 
-// Listar produtos para gestão
-router.get('/listar', (req, res) => {
+// Listar produtos
+router.get('/listar', async (req, res) => {
+    const tenis = await Tenis.find();
+
     res.render('admin/listar', { 
-        tenis: global.tenisData,
+        tenis,
         adminQuery: '?admin=true'
     });
 });
 
 // Formulário de criação
 router.get('/criar', (req, res) => {
-    res.render('admin/criar', { adminQuery: '?admin=true' });
+    res.render('admin/criar', {adminQuery: '?admin=true'});
 });
 
-// Processar criação
-router.post('/criar', (req, res) => {
+// Criar produto
+router.post('/criar', async (req, res) => {
     const { nome, marca, preco, esporte, imagem, descricao, estoque } = req.body;
-    const novoTenis = {
-        id: Date.now().toString(),
+
+    await Tenis.create({
         nome,
         marca,
-        preco: parseFloat(preco),
+        preco,
         esporte,
         imagem,
         descricao,
-        estoque: parseInt(estoque)
-    };
-    global.tenisData.push(novoTenis);
-    res.redirect('/admin/listar?admin=true');
+        estoque
+    });
+
+    res.redirect('/admin/listar');
 });
 
 // Formulário de edição
-router.get('/editar/:id', (req, res) => {
-    const item = global.tenisData.find(t => t.id === req.params.id);
-    if (!item) return res.redirect('/admin/listar?admin=true');
-    
+router.get('/editar/:id', async (req, res) => {
+    const item = await Tenis.findById(req.params.id);
+    if (!item) return res.redirect('/admin/listar');
+
     res.render('admin/editar', { item, adminQuery: '?admin=true' });
 });
 
-// Processar edição
-router.put('/editar/:id', (req, res) => {
-    const index = global.tenisData.findIndex(t => t.id === req.params.id);
-    if (index !== -1) {
-        const { nome, marca, preco, esporte, imagem, descricao, estoque } = req.body;
-        global.tenisData[index] = {
-            ...global.tenisData[index],
-            nome,
-            marca,
-            preco: parseFloat(preco),
-            esporte,
-            imagem,
-            descricao,
-            estoque: parseInt(estoque)
-        };
-    }
-    res.redirect('/admin/listar?admin=true');
+// Editar produto
+router.put('/editar/:id', async (req, res) => {
+    const { nome, marca, preco, esporte, imagem, descricao, estoque } = req.body;
+
+    await Tenis.findByIdAndUpdate(req.params.id, {
+        nome,
+        marca,
+        preco,
+        esporte,
+        imagem,
+        descricao,
+        estoque
+    });
+
+    res.redirect('/admin/listar');
 });
 
 // Remover produto
-router.delete('/remover/:id', (req, res) => {
-    global.tenisData = global.tenisData.filter(t => t.id !== req.params.id);
-    res.redirect('/admin/listar?admin=true');
+router.delete('/remover/:id', async (req, res) => {
+    await Tenis.findByIdAndDelete(req.params.id);
+    res.redirect('/admin/listar');
 });
 
 module.exports = router;

@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,12 +26,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
+// Configuração da sessão
+app.use(session({
+  secret: 'sportshoes_secret',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Middleware global para views
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = !!req.session.userRole; // true se tiver algum usuário logado
+    res.locals.isAdmin = req.session.userRole === 'admin';
+    next();
+});
+
+
 // Rotas
 const publicRoutes = require('./routes/public.routes');
 const adminRoutes = require('./routes/admin.routes');
+const authRoutes = require('./routes/auth.routes');
+
 
 app.use('/', publicRoutes);
 app.use('/admin', adminRoutes);
+app.use('/auth', authRoutes);
 
 // Rota de erro genérica
 app.use((req, res) => {

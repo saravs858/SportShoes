@@ -21,11 +21,19 @@ router.post('/login', async (req, res) => {
         req.session.userRole = user.role;
         req.session.userName = user.nome;
 
+        // ✅ Marcar se é admin
+        if (user.role === 'admin') {
+            req.session.isAdmin = true;
+        } else {
+            req.session.isAdmin = false;
+        }
+
         res.redirect('/');
     } catch (err) {
         res.render('auth/login', { error: 'Erro no servidor. Tente novamente.' });
     }
 });
+
 
 // Página de Cadastro
 router.get('/registro', (req, res) => {
@@ -50,14 +58,20 @@ router.post('/registro', async (req, res) => {
 
         res.redirect('/auth/login');
     } catch (err) {
-        res.render('auth/registro', { error: 'Erro ao cadastrar. Verifique os dados.' });
-    }
-});
+    console.log(err);
+    res.render('auth/registro', { error: 'Erro ao cadastrar. Verifique os dados.' });
+}});
 
 // Logout
 router.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+            return res.redirect('/');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/auth/login');
+    });
 });
 
 module.exports = router;

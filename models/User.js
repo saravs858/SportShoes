@@ -9,16 +9,16 @@ const UserSchema = new mongoose.Schema({
     dataCriacao: { type: Date, default: Date.now }
 });
 
-// Criptografar senha antes de salvar
-UserSchema.pre('save', async function(next) {
-    if (!this.isModified('senha')) return next();
+// ✅ SEM next
+UserSchema.pre('save', async function () {
+    if (!this.isModified('senha')) return;
+
     this.senha = await bcrypt.hash(this.senha, 10);
-    next();
 });
 
 // Método para comparar senhas
-UserSchema.methods.compararSenha = async function(senhaCandidata) {
-    return await bcrypt.compare(senhaCandidata, this.senha);
+UserSchema.methods.compararSenha = function (senhaCandidata) {
+    return bcrypt.compare(senhaCandidata, this.senha);
 };
 
 module.exports = mongoose.model('User', UserSchema);

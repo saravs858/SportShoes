@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+    <h1>Encontre o Tênis Perfeito</h1>
+    <p>Performance, estilo e conforto em um só lugar.</p>
+</section>
+
+<section class="filter-info">
+    <h2>Categoria: <span><%= esporteSelecionado %></span></h2>
+    <% if (esporteSelecionado !== 'Todos') { %>
+        <a href="/<%= isAdmin ? '?admin=true' : '' %>" class="clear-filter">Limpar Filtro</a>
+    <% } %>
+</section>
+
+<div class="products-grid">
+    <% if (tenis.length > 0) { %>
+        <% tenis.forEach(item => { %>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="<%= item.imagem %>" alt="<%= item.nome %>">
+                    <span class="badge"><%= item.esporte %></span>
+                </div>
+                <div class="product-info">
+                    <span class="brand"><%= item.marca %></span>
+                    <h3><%= item.nome %></h3>
+                    <p class="price">R$ <%= item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 }) %></p>
+                    <a href="/tenis/<%= item._id %><%= isAdmin ? '?admin=true' : '' %>" class="btn-details">Ver Detalhes</a>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p class="no-products">Nenhum tênis encontrado nesta categoria.</p>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

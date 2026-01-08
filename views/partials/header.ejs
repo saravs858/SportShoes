@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportShoes - Sua Loja de Tênis</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="/<%= typeof isAdmin !== 'undefined' && isAdmin ? '?admin=true' : '' %>" class="logo">
+                    <i class="fas fa-running"></i> Sport<span>Shoes</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="/<%= typeof isAdmin !== 'undefined' && isAdmin ? '?admin=true' : '' %>">Home</a></li>
+                    <li><a href="/?esporte=Corrida<%= typeof isAdmin !== 'undefined' && isAdmin ? '&admin=true' : '' %>">Corrida</a></li>
+                    <li><a href="/?esporte=Basquete<%= typeof isAdmin !== 'undefined' && isAdmin ? '&admin=true' : '' %>">Basquete</a></li>
+                    <li><a href="/?esporte=Casual<%= typeof isAdmin !== 'undefined' && isAdmin ? '&admin=true' : '' %>">Casual</a></li>
+                    <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+                        <li class="admin-link"><a href="/admin?admin=true"><i class="fas fa-user-shield"></i> Admin</a></li>
+                    <% } else { %>
+                        <li><a href="/admin?admin=true" class="login-btn">Admin Login</a></li>
+                    <% } %>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container">

@@ -1,0 +1,54 @@
+<%- include('../partials/header', { isAdmin: true }) %>
+
+<div class="admin-container">
+    <aside class="admin-sidebar">
+        <h3>Painel Admin</h3>
+        <ul>
+            <li><a href="/admin<%= adminQuery %>"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="/admin/listar<%= adminQuery %>" class="active"><i class="fas fa-list"></i> Listar Produtos</a></li>
+            <li><a href="/admin/criar<%= adminQuery %>"><i class="fas fa-plus-circle"></i> Novo Produto</a></li>
+            <li><a href="/<%= adminQuery %>"><i class="fas fa-eye"></i> Ver Site</a></li>
+        </ul>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-header-actions">
+            <h1>Gerenciar Produtos</h1>
+            <a href="/admin/criar<%= adminQuery %>" class="btn-add"><i class="fas fa-plus"></i> Novo</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Nome</th>
+                        <th>Marca</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% tenis.forEach(item => { %>
+                        <tr>
+                            <td><img src="<%= item.imagem %>" alt="<%= item.nome %>" class="table-img"></td>
+                            <td><%= item.nome %></td>
+                            <td><%= item.marca %></td>
+                            <td>R$ <%= item.preco.toFixed(2) %></td>
+                            <td><%= item.estoque %></td>
+                            <td class="actions-cell">
+                                <a href="/admin/editar/<%= item._id %><%= adminQuery %>" class="btn-edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                <form action="/admin/remover/<%= item._id %>?_method=DELETE&admin=true" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este produto?')">
+                                    <button type="submit" class="btn-delete" title="Excluir"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<%- include('../partials/footer') %>

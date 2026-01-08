@@ -1,0 +1,45 @@
+<%- include('../partials/header', { isAdmin: true }) %>
+
+<div class="admin-container">
+    <aside class="admin-sidebar">
+        <h3>Painel Admin</h3>
+        <ul>
+            <li><a href="/admin<%= adminQuery %>" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="/admin/listar<%= adminQuery %>"><i class="fas fa-list"></i> Listar Produtos</a></li>
+            <li><a href="/admin/criar<%= adminQuery %>"><i class="fas fa-plus-circle"></i> Novo Produto</a></li>
+            <li><a href="/<%= adminQuery %>"><i class="fas fa-eye"></i> Ver Site</a></li>
+        </ul>
+    </aside>
+
+    <main class="admin-content">
+        <h1>Bem-vindo ao Painel de Controle</h1>
+        <p>Gerencie o catálogo de tênis da sua loja.</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-shoe-prints"></i>
+                <div class="stat-info">
+                    <h3><%= totalProdutos %></h3>
+                    <p>Produtos Cadastrados</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <div class="stat-info">
+                    <h3>1</h3>
+                    <p>Administrador Ativo</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h2>Ações Rápidas</h2>
+            <div class="action-buttons">
+                <a href="/admin/criar<%= adminQuery %>" class="btn-action"><i class="fas fa-plus"></i> Adicionar Novo Tênis</a>
+                <a href="/admin/listar<%= adminQuery %>" class="btn-action secondary"><i class="fas fa-edit"></i> Gerenciar Existentes</a>
+            </div>
+        </div>
+    </main>
+</div>
+
+<%- include('../partials/footer') %>

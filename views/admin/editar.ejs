@@ -1,0 +1,68 @@
+<%- include('../partials/header', { isAdmin: true }) %>
+
+<div class="admin-container">
+    <aside class="admin-sidebar">
+        <h3>Painel Admin</h3>
+        <ul>
+            <li><a href="/admin<%= adminQuery %>"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="/admin/listar<%= adminQuery %>"><i class="fas fa-list"></i> Listar Produtos</a></li>
+            <li><a href="/admin/criar<%= adminQuery %>"><i class="fas fa-plus-circle"></i> Novo Produto</a></li>
+            <li><a href="/<%= adminQuery %>"><i class="fas fa-eye"></i> Ver Site</a></li>
+        </ul>
+    </aside>
+
+    <main class="admin-content">
+        <h1>Editar Tênis: <%= item.nome %></h1>
+        
+        <form action="/admin/editar/<%= item._id %>?_method=PUT&admin=true" method="POST" class="admin-form">
+            <div class="form-group">
+                <label for="nome">Nome do Produto</label>
+                <input type="text" id="nome" name="nome" value="<%= item.nome %>" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" name="marca" value="<%= item.marca %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="esporte">Categoria/Esporte</label>
+                    <select id="esporte" name="esporte" required>
+                        <option value="Corrida" <%= item.esporte === 'Corrida' ? 'selected' : '' %>>Corrida</option>
+                        <option value="Basquete" <%= item.esporte === 'Basquete' ? 'selected' : '' %>>Basquete</option>
+                        <option value="Casual" <%= item.esporte === 'Casual' ? 'selected' : '' %>>Casual</option>
+                        <option value="Futebol" <%= item.esporte === 'Futebol' ? 'selected' : '' %>>Futebol</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="preco">Preço (R$)</label>
+                    <input type="number" id="preco" name="preco" step="0.01" value="<%= item.preco %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="estoque">Estoque</label>
+                    <input type="number" id="estoque" name="estoque" value="<%= item.estoque %>" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="imagem">URL da Imagem</label>
+                <input type="url" id="imagem" name="imagem" value="<%= item.imagem %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" name="descricao" rows="5" required><%= item.descricao %></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">Atualizar Produto</button>
+                <a href="/admin/listar<%= adminQuery %>" class="btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </main>
+</div>
+
+<%- include('../partials/footer') %>

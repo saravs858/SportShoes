@@ -38,8 +38,8 @@
                             <td>R$ <%= item.preco.toFixed(2) %></td>
                             <td><%= item.estoque %></td>
                             <td class="actions-cell">
-                                <a href="/admin/editar/<%= item._id %><%= adminQuery %>" class="btn-edit" title="Editar"><i class="fas fa-edit"></i></a>
-                                <form action="/admin/remover/<%= item._id %>?_method=DELETE&admin=true" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este produto?')">
+                                <a href="/admin/editar/<%= item.id %><%= adminQuery %>" class="btn-edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                <form action="/admin/remover/<%= item.id %>?_method=DELETE&admin=true" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este produto?')">
                                     <button type="submit" class="btn-delete" title="Excluir"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>

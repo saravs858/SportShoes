@@ -27,7 +27,7 @@
             <div class="actions">
                 <button class="btn-buy">Comprar Agora</button>
                 <% if (isAdmin) { %>
-                    <a href="/admin/editar/<%= item._id %>?admin=true" class="btn-edit-admin">Editar Produto</a>
+                    <a href="/admin/editar/<%= item.id %>?admin=true" class="btn-edit-admin">Editar Produto</a>
                 <% } %>
             </div>
         </div>

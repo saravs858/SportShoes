@@ -1,0 +1,49 @@
+<%- include('../partials/header', { isAdmin: false }) %>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>Criar Conta</h1>
+        <p>Junte-se à SportShoes hoje mesmo.</p>
+
+        <% if (error) { %>
+            <div class="alert error"><%= error %></div>
+        <% } %>
+
+        <form action="/auth/registro" method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" required placeholder="Seu Nome">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required placeholder="Mínimo 6 caracteres">
+            </div>
+            <div class="form-group">
+                <label for="codigoAdmin">Código Admin (Opcional)</label>
+                <input type="text" id="codigoAdmin" name="codigoAdmin" placeholder="Apenas para administradores">
+                <small style="color: #888;">Use ADMIN123 para testar permissões de admin.</small>
+            </div>
+            <button type="submit" class="btn-buy" style="width: 100%;">Cadastrar</button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Já tem uma conta? <a href="/auth/login">Faça login</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .auth-container { display: flex; justify-content: center; align-items: center; min-height: 70vh; padding: 20px; }
+    .auth-card { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+    .auth-card h1 { margin-bottom: 10px; text-align: center; }
+    .auth-card p { text-align: center; color: #666; margin-bottom: 30px; }
+    .alert.error { background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center; }
+    .auth-footer { margin-top: 20px; text-align: center; font-size: 0.9rem; }
+    .auth-footer a { color: #e63946; text-decoration: none; font-weight: bold; }
+</style>
+
+<%- include('../partials/footer') %>

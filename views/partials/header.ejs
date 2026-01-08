@@ -15,14 +15,20 @@
                     <i class="fas fa-running"></i> Sport<span>Shoes</span>
                 </a>
                 <ul class="nav-links">
-                    <li><a href="/<%= typeof isAdmin !== 'undefined' && isAdmin ? '?admin=true' : '' %>">Home</a></li>
-                    <li><a href="/?esporte=Corrida<%= typeof isAdmin !== 'undefined' && isAdmin ? '&admin=true' : '' %>">Corrida</a></li>
-                    <li><a href="/?esporte=Basquete<%= typeof isAdmin !== 'undefined' && isAdmin ? '&admin=true' : '' %>">Basquete</a></li>
-                    <li><a href="/?esporte=Casual<%= typeof isAdmin !== 'undefined' && isAdmin ? '&admin=true' : '' %>">Casual</a></li>
-                    <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
-                        <li class="admin-link"><a href="/admin?admin=true"><i class="fas fa-user-shield"></i> Admin</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/?esporte=Corrida">Corrida</a></li>
+                    <li><a href="/?esporte=Basquete">Basquete</a></li>
+                    <li><a href="/?esporte=Casual">Casual</a></li>
+                    
+                    <% if (locals.user) { %>
+                        <% if (locals.isAdmin) { %>
+                            <li class="admin-link"><a href="/admin"><i class="fas fa-user-shield"></i> Admin</a></li>
+                        <% } %>
+                        <li class="user-info">Olá, <strong><%= user.nome %></strong></li>
+                        <li><a href="/auth/logout" class="logout-link"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
                     <% } else { %>
-                        <li><a href="/admin?admin=true" class="login-btn">Admin Login</a></li>
+                        <li><a href="/auth/login" class="login-btn">Entrar</a></li>
+                        <li><a href="/auth/registro" class="register-btn">Cadastrar</a></li>
                     <% } %>
                 </ul>
                 <div class="menu-toggle">

@@ -1,0 +1,24 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
+    nome: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    senha: { type: String, required: true },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    dataCriacao: { type: Date, default: Date.now }
+});
+
+// Criptografar senha antes de salvar
+UserSchema.pre('save', async function(next) {
+    if (!this.isModified('senha')) return next();
+    this.senha = await bcrypt.hash(this.senha, 10);
+    next();
+});
+
+// Método para comparar senhas
+UserSchema.methods.compararSenha = async function(senhaCandidata) {
+    return await bcrypt.compare(senhaCandidata, this.senha);
+};
+
+module.exports = mongoose.model('User', UserSchema);
